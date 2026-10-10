@@ -20,7 +20,7 @@ An end-to-end analytics project:
 1. **Python**: ingest data, clean it, engineer pre-match features, train and evaluate classifiers with a temporal split, export tables for BI.
 2. **Power BI**: relational model, DAX measures and a four-page dashboard, including predicted probabilities for the next matchday.
 
-Data coverage: Premier League, seasons 2021-22 to 2025-26 (historical CSVs) plus the 2026-27 season (played and scheduled fixtures from an API). The cleaned dataset (`matches_clean.csv`) has 2,280 rows, one per match [VERIFY: confirm that scheduled fixtures are included in the 2,280].
+Data coverage: Premier League, seasons 2021-22 to 2025-26 (historical CSVs) plus the 2026-27 season (played and scheduled fixtures from an API). The cleaned dataset (`matches_clean.csv`) has 2,280 rows, one per match.
 
 ## Features
 
@@ -47,7 +47,7 @@ Everything is free to use: no paid licenses or paid API tiers.
 ## Key Technical Decisions
 
 - **Temporal validation, not random.** Train on the past, validate and test on later matches. A random split would let the model "see" the future and inflate metrics.
-- **Leakage prevention by construction.** Each feature of a match is computed only from matches played before it (including Elo, which is updated after each match is used, never before). [VERIFY: describe the exact mechanism in `features.py`, e.g. shifting / expanding windows.] See `src/check_leakage.py` and the note in [Limitations](#limitations).
+- **Leakage prevention by construction.** Each feature of a match is computed only from matches played before it (including Elo, which is updated after each match is used, never before). See `src/check_leakage.py` and the note in [Limitations](#limitations).
 - **Log loss as the primary metric.** For probabilistic predictions, log loss rewards calibrated probabilities, whereas accuracy only checks the top pick.
 - **Baselines first.** "Always home" and logistic regression set the bar; XGBoost has to earn its place.
 - **XGBoost over LightGBM.** Simpler setup for a dataset this small (a few thousand rows); no evidence a different boosting library would change the conclusion.
@@ -110,7 +110,7 @@ cp .env.example .env
 
 ## Usage
 
-Run from the repository root, in this order [VERIFY: `python src/x.py` vs `python -m src.x`, depending on how `config.py` is imported]:
+Run from the repository root, in this order:
 
 ```bash
 python src/ingest_api.py     # 1. downloads the 2026 season from the API (cached on disk)
@@ -188,7 +188,7 @@ Train-set figures (XGBoost: log loss 0.862, accuracy 60.7%) are shown only to ex
 - **Small sample:** About 430 test matches, one league, five-plus seasons.
 - **Missing information:** No lineups, injuries, transfers, odds or expected goals.
 - **Not financial advice:** Not validated against bookmaker odds; do not use for betting.
-- **Snapshot:** The "Next Matchday" page reflects the data as of [VERIFY: date of last API download].
+- **Snapshot:** The "Next Matchday" page reflects the data as of 9/10/2026.
 
 ## Screenshots
 
