@@ -122,6 +122,17 @@ python src/model.py          # 5. features, baseline / logistic / XGBoost, expor
 
 Outputs for the dashboard are written to `data/processed/powerbi/`.
 
+### Live tracking (frozen predictions)
+
+Before each matchday, the predictions are frozen in `data/processed/predictions_log.csv` and committed, so the commit date proves they were made before kickoff. Already-logged matches are never overwritten.
+
+```bash
+python src/track_predictions.py score   # scores the logged predictions against real results
+python src/track_predictions.py log     # freezes the next matchday (refresh the data first)
+```
+
+The log is keyed by season + home team + away team, not by `match_id`, because `match_id` is a row number that shifts when a fixture is rescheduled.
+
 ### Opening the dashboard
 
 The dashboard file lives in `data/processed/powerbi/`.
@@ -153,7 +164,8 @@ football-match-predictor
 │   ├── clean.py              # raw -> matches_clean.csv
 │   ├── features.py           # pre-match features
 │   ├── check_leakage.py      # leakage check
-│   └── model.py              # baseline, logistic, XGBoost, exports
+│   ├── model.py              # baseline, logistic, XGBoost, exports
+│   └── track_predictions.py  # frozen prediction log and scoring
 ├── .env.example
 ├── .gitignore
 ├── requirements.txt
