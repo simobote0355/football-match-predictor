@@ -4,7 +4,7 @@
     python src/track_predictions.py score   # compare the log against real results
 
 Weekly routine:
-    1. python src/ingest_api.py && python src/clean.py && python src/model.py   (refresh results)
+    1. python src/ingest_api.py && python src/clean.py && python src/features.py && python src/model.py   (refresh)
     2. python src/track_predictions.py score                                   (score last matchday)
     3. python src/track_predictions.py log                                     (freeze the next one)
     4. git add data/processed/predictions_log.csv && git commit && git push    (BEFORE kickoff)

@@ -1,6 +1,6 @@
 import pandas as pd
 from config import PROCESSED_DIR
-from features import build_features, FEATURE_COLS
+from features import build_features, ALL_COLS as FEATURE_COLS   # check every group, not only the active ones
 
 df = pd.read_csv(PROCESSED_DIR / "matches_clean.csv", parse_dates=["date"])
 base = build_features(df)

@@ -117,7 +117,8 @@ python src/ingest_api.py     # 1. downloads the 2026 season from the API (cached
 python src/check_raw.py      # 2. prints rows and date range per CSV, and matches/finished per API file
 python src/clean.py          # 3. builds data/processed/matches_clean.csv
 python src/check_leakage.py  # 4. perturbation test of the feature pipeline (needs matches_clean.csv)
-python src/model.py          # 5. features, baseline / logistic / XGBoost, exports CSVs for Power BI
+python src/features.py       # 5. builds data/processed/features.csv (all feature groups)
+python src/model.py          # 6. baseline / logistic / XGBoost on the groups in USE_GROUPS, exports CSVs for Power BI
 ```
 
 Outputs for the dashboard are written to `data/processed/powerbi/`.
